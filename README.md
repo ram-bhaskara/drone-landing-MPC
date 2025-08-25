@@ -37,17 +37,11 @@ $$\begin{align}
 MPC looks for optimal control law in the finite horizon (for N steps). It takes a cost minimizing step towards the goal - only for the fixed horizon. After executing the control for that step, it slides the horizon window, incorporates new information from trajectory, and computes the control towards the goal. 
 
 ## Objective Function
-$$J = \frac{1}{2} (\mathbf{x}_N - \mathbf{x}_\text{ref})^T \mathbf{Q}_N (\mathbf{x}_N - \mathbf{x}_\text{ref}) + \sum_{k = 1}^{N} \frac{1}{2}(\mathbf{x}_k - \mathbf{x}_\text{ref})^T \mathbf{Q} (\mathbf{x}_k - \mathbf{x}_\text{ref}) + \frac{1}{2} (\mathbf{u}_k - \mathbf{u}_\text{ref})^T \mathbf{R} (\mathbf{u}_k - \mathbf{u}_\text{ref})$$ 
+$$ \begin{equation} J = \frac{1}{2} (\mathbf{x}_N - \mathbf{x}_r)^T \mathbf{Q}_N (\mathbf{x}_N - \mathbf{x}_r) + \sum \frac{1}{2}(\mathbf{x}_k - \mathbf{x}_r)^T \mathbf{Q} (\mathbf{x}_k - \mathbf{x}_r) + \frac{1}{2} (\mathbf{u}_k - \mathbf{u}_r)^T \mathbf{R} (\mathbf{u}_k - \mathbf{u}_r) 
+\end{equation}$$ 
  
 
-The penalty on terminal states, deviation from nominal trajectory and control is a convex optimization problem solved using quadratic programming. 
-OSQP
-
-  $$ {\text{argmin}}_{\mathbf{z}} \quad \frac{1}{2} \mathbf{z}' \mathbf{H} \mathbf{z} + \mathbf{g}' \mathbf{z} $$
-   $$ \text{subject to} \quad \mathbf{lb} \leq \mathbf{A}_c \mathbf{z} \leq \mathbf{ub}$$
-where $z: n \times 1$ | $\mathbf{H}: n \times n$ | $ \mathbf{g}: n \times 1$ | $\mathbf{A}_c: m \times n$ ($m$ constraints)   
-
-$\mathbf{z} = [\mathbf{x}_0, \mathbf{x}_1, \dots, \mathbf{x}_N, \mathbf{u}_0, \dots, \mathbf{u}_{N-1}]$
+The penalty on terminal states, deviation from nominal trajectory and control is a convex optimization problem solved using quadratic programming. Solver used: OSQP. 
 
 ## MPC implementation
 ![MPC_overview.png](figures/MPC_overview.jpg)
@@ -55,7 +49,10 @@ $\mathbf{z} = [\mathbf{x}_0, \mathbf{x}_1, \dots, \mathbf{x}_N, \mathbf{u}_0, \d
 
 # Results 
 
+![controller_responses.png](figures/controller_responses.png)
+
 See the notebook for results on individual states as well as tuning parameters.
+
 
 # Notes
 
@@ -80,4 +77,3 @@ Control requires careful tuning of penalties in states and costs. Apart from con
 - [MPC for convex optimization](https://www.youtube.com/watch?v=7aomMyPHKwI&t=3710s&ab_channel=CMURoboticExplorationLab)
 - [MPC Quadratic Programming](https://www.youtube.com/watch?v=mVCjzMtj7yE&ab_channel=xLABforSafeAutonomousSystems)
 
-![controller_responses.png](figures/controller_responses.png)
