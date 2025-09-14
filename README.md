@@ -1,5 +1,5 @@
 # drone-landing-MPC
-Comparison of PID, LQR and MPC for drone landing problem
+Comparison of LQR and MPC for drone landing problem
 
 # 3 DoF Planar Drone Landing Problem
 > Ramchander Bhaskara, PhD, Texas A&M University
